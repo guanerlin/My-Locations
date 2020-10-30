@@ -165,6 +165,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
                     if let places = placemarks {
                         print("*** Found places: \(places)")
                     }
+                    
+                    self.lastGeocodingError = error
+                    if error == nil, let p = placemarks, !p.isEmpty {
+                        self.placemark = p.last!
+                    } else {
+                        self.placemark = nil
+                    }
+                    self.performingReverseGeocoding = false
+                    self.updateLabels()
                 }
             }
         }
